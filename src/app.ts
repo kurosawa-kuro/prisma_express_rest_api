@@ -1,7 +1,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import userController from "./controllers/userController";
 
 const app = express();
 app.use(express.json());
@@ -11,9 +11,6 @@ app.get("/", (req, res) => {
     res.end("hello express\n");
 });
 
-app.get("/users", async (req, res) => {
-    const users = await prisma.user.findMany();
-    res.json({ users });
-});
+app.use("/users", userController);
 
 export default app;
