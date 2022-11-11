@@ -10,7 +10,7 @@ export default async function () {
             const prisma = new PrismaClient();
             // const deletePosts = prisma.post.deleteMany()
             // const deleteProfile = prisma.profile.deleteMany()
-            const deleteUsers = prisma.user.deleteMany()
+            const deleteUsers = prisma.user.deleteMany({})
 
             // The transaction runs synchronously so deleteUsers must run last.
             await prisma.$transaction([deleteUsers])
