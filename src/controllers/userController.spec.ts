@@ -19,7 +19,7 @@ describe("userController test", () => {
                 await prisma.user.create({ data: { id: i, name: `user${i}`, email: `user${i}@example.com`, password: 'aaaaaaaaaa' } });
             }
             const users = await prisma.user.findMany();
-            const userWithoutPW = users.map((user: any) => {
+            const usersWithoutPassWord = users.map((user: any) => {
                 delete user.password
 
                 return user
@@ -28,7 +28,7 @@ describe("userController test", () => {
             const response = await supertest(app).get("/users");
 
             expect(response.status).toBe(200);
-            expect(response.body.users).toEqual(userWithoutPW);
+            expect(response.body.users).toEqual(usersWithoutPassWord);
         });
     });
 
