@@ -6,24 +6,7 @@ export type User = {
     email: string;
 };
 
-export const listUsers = async (): Promise<User[]> => {
-    return db.user.findMany({
-        select: {
-            id: true,
-            name: true,
-            email: true,
-        },
-    });
-};
-
-export const getUser = async (id: number): Promise<User | null> => {
-    return db.user.findUnique({
-        where: {
-            id,
-        },
-    });
-};
-
+// Create
 export const createUser = async (
     user: Omit<User, "id">
 ): Promise<User> => {
@@ -41,9 +24,30 @@ export const createUser = async (
     });
 };
 
+// Read
+export const readUsers = async (): Promise<User[]> => {
+    return db.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+        },
+    });
+};
+
+// Read
+export const readUser = async (id: number): Promise<User | null> => {
+    return db.user.findUnique({
+        where: {
+            id,
+        },
+    });
+};
+
+// Update
 export const updateUser = async (
-    user: Omit<User, "id">,
-    id: number
+    id: number,
+    user: Omit<User, "id">
 ): Promise<User> => {
     const { name, email } = user;
     return db.user.update({
@@ -62,6 +66,7 @@ export const updateUser = async (
     });
 };
 
+// Delete
 export const deleteUser = async (id: number): Promise<void> => {
     await db.user.delete({
         where: {
