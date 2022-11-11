@@ -2,7 +2,7 @@ import { db } from "../utils/db";
 const bcrypt = require("bcrypt");
 
 export type User = {
-    id: number;
+    id?: number;
     name: string;
     email: string;
     password: string;
@@ -26,7 +26,6 @@ export const signupUser = async (
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    // console.log({ hashedPassword })
 
     return db.user.create({
         data: {

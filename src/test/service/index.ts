@@ -1,26 +1,31 @@
-// import * as UserService from "../../service/user";
+import * as UserService from "../../service/user";
 import * as AuthService from "../../service/auth";
 
 async function main() {
-    // userServiceStart()
-    authServiceStart()
+    userServiceStart()
+    // authServiceStart()
 }
 
 async function userServiceStart() {
-    // // C
-    // await UserService.createUser({ name: 'aaa', email: 'aaa@aaa.aaa' });
+    // C
+    await UserService.createUser({
+        name: 'aaa', email: 'aaa@aaa.aaa',
+        password: 'aaa@aaa.aaa'
+    });
 
-    // // R
-    // const user = await UserService.readUsers();
-    // console.log({ user })
+    // R
+    const user = await UserService.readUsers();
+    console.log({ user })
 
-    // // U
-    // const id = user[0].id
-    // const updateUser = await UserService.updateUser(id, { name: 'bbb', email: 'bbb@bbb.bbb' });
-    // console.log({ updateUser })
+    // U
+    const id = user[0].id
+    const updateUser = await UserService.updateUser(id, {
+        name: 'bbb', email: 'bbb@bbb.bbb'
+    });
+    console.log({ updateUser })
 
-    // // D
-    // await UserService.deleteUser(id);
+    // D
+    await UserService.deleteUser(id);
 }
 
 async function authServiceStart() {
