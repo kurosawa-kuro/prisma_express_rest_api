@@ -30,7 +30,6 @@ describe("userController test", () => {
     describe("GET /users/:id", () => {
         test("response with success", async () => {
             const user = await prisma.user.create({ data: { id: 1, name: "user1", email: "user1@example.com" } });
-
             const response = await supertest(app).get("/users/1");
 
             expect(response.status).toBe(200);
@@ -45,9 +44,10 @@ describe("userController test", () => {
             const response = await supertest(app).post("/users").send(body);
             const users = await prisma.user.findMany();
 
-            expect(response.status).toBe(200);
+            expect(response.status).toBe(201);
             expect(response.body.user.name).toEqual(body.name);
             expect(response.body.user.email).toEqual(body.email);
+
             expect(users.length).toBe(1);
         });
     });
@@ -76,8 +76,7 @@ describe("userController test", () => {
             const response = await supertest(app).delete("/users/1");
             const users = await prisma.user.findMany();
 
-            expect(response.status).toBe(200);
-            expect(response.body.user).toEqual(user);
+            expect(response.status).toBe(204);
 
             expect(users.length).toBe(0);
         });

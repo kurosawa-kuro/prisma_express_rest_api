@@ -1,49 +1,48 @@
 import { PrismaClient } from "@prisma/client";
 import { Router, Request, Response } from "express";
 
-const prisma = new PrismaClient();
+import * as UserService from "../service/user";
+
 const router = Router();
 
 // GET /users
 router.get("/", async (req: Request, res: Response) => {
-    const users = await prisma.user.findMany();
+    const users = await UserService.listUsers();
+
     res.json({ users });
 });
 
 // GET /users/:id
 router.get("/:id", async (req: Request, res: Response) => {
-    const user = await prisma.user.findUnique({
-        where: { id: parseInt(req.params?.id) },
-    });
+    const id: number = parseInt(req.params?.id, 10);
+    const user = await UserService.getUser(id);
+
     res.json({ user });
 });
 
-// POST /users
+// // POST /users
 router.post("/", async (req: Request, res: Response) => {
-    const { name, email } = req.body;
-    const user = await prisma.user.create({
-        data: { name, email },
-    });
-    res.json({ user });
+    const body = req.body;
+    const user = await UserService.createUser(body);
+
+    return res.status(201).json({ user });
 });
 
 // PUT /users/:id
 router.put("/:id", async (req: Request, res: Response) => {
-    const { name, email } = req.body;
-    const user = await prisma.user.update({
-        where: { id: parseInt(req.params?.id) },
-        data: { name, email },
-    });
-    res.json({ user });
+    const id: number = parseInt(req.params?.id, 10);
+    const body = req.body;
+    const user = await UserService.updateUser(body, id);
+    return res.status(200).json({ user });
 });
 
 
 // DELETE /users/:id
 router.delete("/:id", async (req: Request, res: Response) => {
-    const user = await prisma.user.delete({
-        where: { id: parseInt(req.params?.id) },
-    });
-    res.json({ user });
+    const id: number = parseInt(req.params?.id, 10);
+    await UserService.deleteUser(id);
+
+    return res.status(204).json("User has been successfully deleted");
 });
 
 export default router
