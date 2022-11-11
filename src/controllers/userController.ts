@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { Router, Request, Response } from "express";
 
 import * as UserService from "../service/user";
@@ -7,17 +6,17 @@ const router = Router();
 
 // GET /users
 router.get("/", async (req: Request, res: Response) => {
-    const users = await UserService.listUsers();
+    const users = await UserService.readUsers();
 
-    res.json({ users });
+    return res.status(200).json({ users });
 });
 
 // GET /users/:id
 router.get("/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params?.id, 10);
-    const user = await UserService.getUser(id);
+    const user = await UserService.readUser(id);
 
-    res.json({ user });
+    return res.status(200).json({ user });
 });
 
 // // POST /users
@@ -32,7 +31,8 @@ router.post("/", async (req: Request, res: Response) => {
 router.put("/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params?.id, 10);
     const body = req.body;
-    const user = await UserService.updateUser(body, id);
+    const user = await UserService.updateUser(id, body);
+
     return res.status(200).json({ user });
 });
 
