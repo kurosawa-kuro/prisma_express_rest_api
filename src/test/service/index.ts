@@ -1,6 +1,5 @@
 import * as UserService from "../../service/user";
 
-
 async function main() {
     // C
     await UserService.createUser({ name: 'aaa', email: 'aaa@aaa.aaa' });
