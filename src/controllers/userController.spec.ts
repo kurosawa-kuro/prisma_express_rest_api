@@ -7,9 +7,7 @@ const prisma = new PrismaClient();
 
 describe("userController test", () => {
     beforeEach(async () => {
-        // console.log("invoked await resetDatabase()")
         await resetDatabase();
-        // await prisma.user.deleteMany();
     });
     afterAll(async () => {
         await prisma.$disconnect();
@@ -17,16 +15,13 @@ describe("userController test", () => {
 
     describe("GET /users", () => {
         test("response with success", async () => {
-            console.log("aaaaaaaaaaaaa")
-            // for (let i = 0; i < 3; i++) {
-            const i = 11
-            await prisma.user.create({ data: { id: i, name: `user${i}`, email: `user${i}@example.com` } });
-            // }
-            console.log("bbbbbbbbbbb")
+            for (let i = 1; i < 5; i++) {
+                await prisma.user.create({ data: { id: i, name: `user${i}`, email: `user${i}@example.com` } });
+            }
+
             const users = await prisma.user.findMany();
-            console.log("Cccccccccccc")
-            console.log({ users })
             const response = await supertest(app).get("/users");
+
             expect(response.status).toBe(200);
             expect(response.body.users).toEqual(users);
         });
