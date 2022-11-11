@@ -18,8 +18,8 @@ describe("userController test", () => {
             for (let i = 1; i < 5; i++) {
                 await prisma.user.create({ data: { id: i, name: `user${i}`, email: `user${i}@example.com` } });
             }
-
             const users = await prisma.user.findMany();
+
             const response = await supertest(app).get("/users");
 
             expect(response.status).toBe(200);
@@ -32,6 +32,7 @@ describe("userController test", () => {
             const user = await prisma.user.create({ data: { id: 1, name: "user1", email: "user1@example.com" } });
 
             const response = await supertest(app).get("/users/1");
+
             expect(response.status).toBe(200);
             expect(response.body.user).toEqual(user);
         });
@@ -40,12 +41,13 @@ describe("userController test", () => {
     describe("POST /users", () => {
         test("response with success", async () => {
             const body = { name: "posted user1", email: "posted_user1@example.com" };
+
             const response = await supertest(app).post("/users").send(body);
+            const users = await prisma.user.findMany();
+
             expect(response.status).toBe(200);
             expect(response.body.user.name).toEqual(body.name);
             expect(response.body.user.email).toEqual(body.email);
-
-            const users = await prisma.user.findMany();
             expect(users.length).toBe(1);
         });
     });
@@ -53,14 +55,15 @@ describe("userController test", () => {
     describe("PUT /users/:id", () => {
         test("response with success", async () => {
             await prisma.user.create({ data: { id: 1, name: "user1", email: "user1@example.com" } });
-
             const body = { name: "updated", email: "updated@example.com" };
+
             const response = await supertest(app).put("/users/1").send(body);
+            const after = await prisma.user.findUnique({ where: { id: 1 } });
+
             expect(response.status).toBe(200);
             expect(response.body.user.name).toEqual(body.name);
             expect(response.body.user.email).toEqual(body.email);
 
-            const after = await prisma.user.findUnique({ where: { id: 1 } });
             expect(after?.name).toEqual(body.name);
             expect(after?.email).toEqual(body.email);
         });
@@ -71,10 +74,11 @@ describe("userController test", () => {
             const user = await prisma.user.create({ data: { id: 1, name: "user1", email: "user1@example.com" } });
 
             const response = await supertest(app).delete("/users/1");
+            const users = await prisma.user.findMany();
+
             expect(response.status).toBe(200);
             expect(response.body.user).toEqual(user);
 
-            const users = await prisma.user.findMany();
             expect(users.length).toBe(0);
         });
     });
