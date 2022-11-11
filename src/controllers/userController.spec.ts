@@ -40,7 +40,7 @@ describe("userController test", () => {
 
     describe("POST /users", () => {
         test("response with success", async () => {
-            const body = { name: "posted user1", email: "posted_user1@example.com" };
+            const body = { name: "user1", email: "user1@example.com" };
 
             const response = await supertest(app).post("/users").send(body);
             const users = await prisma.user.findMany();
