@@ -4,22 +4,9 @@ import * as UserService from "../service/user";
 
 const router = Router();
 
-// GET /users
-router.get("/", async (req: Request, res: Response) => {
-    const users = await UserService.readUsers();
-
-    return res.status(200).json({ users });
-});
-
-// GET /users/:id
-router.get("/:id", async (req: Request, res: Response) => {
-    const id: number = parseInt(req.params?.id, 10);
-    const user = await UserService.readUser(id);
-
-    return res.status(200).json({ user });
-});
-
-// // POST /users
+// @desc    Create user
+// @route   POST /users
+// @access  Public
 router.post("/", async (req: Request, res: Response) => {
     const body = req.body;
     const user = await UserService.createUser(body);
@@ -27,7 +14,28 @@ router.post("/", async (req: Request, res: Response) => {
     return res.status(201).json({ user });
 });
 
-// PUT /users/:id
+// @desc    Read users
+// @route   GET /users
+// @access  Public
+router.get("/", async (req: Request, res: Response) => {
+    const users = await UserService.readUsers();
+
+    return res.status(200).json({ users });
+});
+
+// @desc    Read user
+// @route   GET /users/:id
+// @access  Public
+router.get("/:id", async (req: Request, res: Response) => {
+    const id: number = parseInt(req.params?.id, 10);
+    const user = await UserService.readUser(id);
+
+    return res.status(200).json({ user });
+});
+
+// @desc    Update user
+// @route   PUT /user/:id
+// @access  Public
 router.put("/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params?.id, 10);
     const body = req.body;
@@ -37,7 +45,9 @@ router.put("/:id", async (req: Request, res: Response) => {
 });
 
 
-// DELETE /users/:id
+// @desc    Delete user
+// @route   DELETE /users/:id
+// @access  Public
 router.delete("/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params?.id, 10);
     await UserService.deleteUser(id);
