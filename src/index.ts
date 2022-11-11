@@ -4,8 +4,6 @@ import app from "./app";
 
 const PORT = process.env.PORT || 3000;
 
-
-
 db.$connect()
     .then(() => {
         app.listen(PORT, () => {
