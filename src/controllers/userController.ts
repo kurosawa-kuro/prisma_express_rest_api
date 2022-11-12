@@ -40,7 +40,7 @@ const updateUserAction = asyncHandler(async (req: Request, res: Response) => {
     const body: User = req.body;
     const user = await updateUserService(id, body);
 
-    return res.status(200).json({ user });
+    return res.status(201).json({ user });
 });
 
 

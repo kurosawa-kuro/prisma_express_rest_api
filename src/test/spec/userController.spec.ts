@@ -67,7 +67,7 @@ describe("userController test", () => {
             const response = await supertest(app).put("/users/1").send(body);
             const after = await prisma.user.findUnique({ where: { id: 1 } });
 
-            expect(response.status).toBe(200);
+            expect(response.status).toBe(201);
             expect(response.body.user.name).toEqual(body.name);
             expect(response.body.user.email).toEqual(body.email);
 
