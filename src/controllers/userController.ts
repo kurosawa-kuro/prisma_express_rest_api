@@ -1,17 +1,24 @@
 import { Router, Request, Response } from "express";
-
+import { db } from "../utils/db";
 import * as UserService from "../service/user";
+import asyncHandler from '../utils/asyncHandler';
 
 const router = Router();
 
 // @desc    Create user
 // @route   POST /users
 // @access  Public
-router.post("/", async (req: Request, res: Response) => {
-    const body = req.body;
-    const user = await UserService.createUser(body);
+// router.post("/", async (req: Request, res: Response) => {
+//     const body = req.body;
+//     const user = await UserService.createUser(body);
 
-    return res.status(201).json({ user });
+//     return res.status(201).json({ user });
+// });
+
+export const index = asyncHandler(async (req: Request, res: Response) => {
+    const users = await UserService.readUsers();
+
+    return res.status(200).json({ users });
 });
 
 // @desc    Read users

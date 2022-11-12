@@ -1,6 +1,8 @@
 import express from "express";
+import asyncHandler from "express-async-handler"
+import userRoutes from './routes/users';
 
-import userController from "./controllers/userController";
+
 
 const app = express();
 app.use(express.json());
@@ -10,6 +12,6 @@ app.get("/", (req, res) => {
     res.end("hello express\n");
 });
 
-app.use("/users", userController);
+app.use('/users', userRoutes);
 
 export default app;
