@@ -34,7 +34,7 @@ async function authServiceStart() {
     // console.log({ registerUser })
 
     const signinedUser = await loginUserService({
-        email: `aaa@email.com`, password: 'aaa@aaa.aaa_',
+        email: `aaa@email.com`, password: 'aaa@aaa.aaa',
     })
     console.log({ signinedUser })
 }

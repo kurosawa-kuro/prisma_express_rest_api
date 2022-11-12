@@ -47,11 +47,8 @@ const loginUserService = async (
 ): Promise<Omit<User, "password"> | undefined> => {
     const { email, password } = user;
 
-
     const foundUserWithEmail = await db.user.findUnique({
-        where: {
-            email,
-        },
+        where: { email },
     })
 
     if (!foundUserWithEmail) {
@@ -69,21 +66,6 @@ const loginUserService = async (
         name: foundUserWithEmail.name,
         email: foundUserWithEmail.email
     } as Omit<User, "password">
-
-
-    // return db.user.create({
-    //     data: {
-    //         name,
-    //         email,
-    //         password: password || "",
-    //     },
-    //     select: {
-    //         id: true,
-    //         name: true,
-    //         email: true,
-    //         password: true,
-    //     },
-    // });
 };
 
 
