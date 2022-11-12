@@ -11,9 +11,8 @@ export type User = {
 const registerUserService = async (
     user: Omit<User, "id">
 ): Promise<Omit<User, "id" | "password">> => {
+    console.log({ user })
     const { name, email, password } = user;
-
-    // 既存ユーザーチェック Email
     const foundUserWithEmail = await db.user.findUnique({
         where: {
             email,
@@ -23,10 +22,9 @@ const registerUserService = async (
     if (foundUserWithEmail) {
         throw new Error('user already exists');
     }
-    // PW暗号化
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 登録
     return db.user.create({
         data: {
             name,

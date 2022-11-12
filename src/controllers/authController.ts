@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 
-import { User, createUserService, readUsersService, readUserService, updateUserService, deleteUserService } from "../services/userService";
+import { registerUserService, loginUserService } from "../services/authService";
 import asyncHandler from '../utils/asyncHandler';
 
 // @desc    Create user
 // @route   POST /users
 // @access  Public
 const registerUserAction = asyncHandler(async (req: Request, res: Response) => {
-    const body: User = req.body;
-    const user = await createUserService(body);
+    const body = req.body;
+    const user = await registerUserService(body);
 
     return res.status(201).json({ user });
 });
@@ -17,8 +17,8 @@ const registerUserAction = asyncHandler(async (req: Request, res: Response) => {
 // @route   GET /users
 // @access  Public
 const loginUserAction = asyncHandler(async (req: Request, res: Response) => {
-    const body: User = req.body;
-    const user = await createUserService(body);
+    const body = req.body;
+    const user = await loginUserService(body);
 
     return res.status(201).json({ user });
 });
