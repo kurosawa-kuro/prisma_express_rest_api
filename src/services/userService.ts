@@ -7,26 +7,7 @@ export type User = {
     password?: string;
 };
 
-export const readUsersService = async (): Promise<Omit<User, "password">[]> => {
-    return db.user.findMany({
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            password: false,
-        },
-    });
-};
-
-export const readUser = async (id: number): Promise<User | null> => {
-    return db.user.findUnique({
-        where: {
-            id,
-        },
-    });
-};
-
-export const createUser = async (
+export const createUserService = async (
     user: Omit<User, "id">
 ): Promise<User> => {
     const { name, email, password } = user;
@@ -45,7 +26,26 @@ export const createUser = async (
     });
 };
 
-export const updateUser = async (
+export const readUsersService = async (): Promise<Omit<User, "password">[]> => {
+    return db.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            password: false,
+        },
+    });
+};
+
+export const readUserService = async (id: number): Promise<User | null> => {
+    return db.user.findUnique({
+        where: {
+            id,
+        },
+    });
+};
+
+export const updateUserService = async (
     id: number,
     user: Omit<User, "id">
 
@@ -67,7 +67,7 @@ export const updateUser = async (
     });
 };
 
-export const deleteUser = async (id: number): Promise<void> => {
+export const deleteUserService = async (id: number): Promise<void> => {
     await db.user.delete({
         where: {
             id,
