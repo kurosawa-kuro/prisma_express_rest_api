@@ -1,5 +1,5 @@
-import * as UserService from "../../service/user";
-import * as AuthService from "../../service/auth";
+import * as UserService from "../../services/userService";
+import * as AuthService from "../../services/auth";
 
 async function main() {
     userServiceStart()

@@ -1,8 +1,5 @@
 import express from "express";
-import asyncHandler from "express-async-handler"
-import userRoutes from './routes/users';
-
-
+import userRoutes from './routes/usersRoute';
 
 const app = express();
 app.use(express.json());

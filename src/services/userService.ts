@@ -7,7 +7,7 @@ export type User = {
     password?: string;
 };
 
-export const readUsers = async (): Promise<Omit<User, "password">[]> => {
+export const readUsersService = async (): Promise<Omit<User, "password">[]> => {
     return db.user.findMany({
         select: {
             id: true,
