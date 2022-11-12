@@ -24,7 +24,7 @@ const protect = asyncHandler(async (req: express.Request, res: express.Response,
 
             // Verify token
             const decoded = jwt.verify(token, "process.env.JWT_SECRET")
-            console.log({ decoded })
+            // console.log({ decoded })
 
             // Get user from the token
             req.user = await db.user.findUnique({
