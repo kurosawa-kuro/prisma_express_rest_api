@@ -27,6 +27,7 @@ describe("userController test", () => {
             });
 
             const response = await supertest(app).get("/users");
+            console.log({ response })
 
             expect(response.status).toBe(200);
             expect(response.body.users).toEqual(usersWithoutPassWord);
