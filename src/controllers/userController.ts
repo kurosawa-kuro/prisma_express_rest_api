@@ -1,12 +1,6 @@
 import { Router, Request, Response } from "express";
 
-import {
-    createUserService,
-    readUsersService,
-    readUserService,
-    updateUserService,
-    deleteUserService
-} from "../services/userService";
+import { createUserService, readUsersService, readUserService, updateUserService, deleteUserService } from "../services/userService";
 import asyncHandler from '../utils/asyncHandler';
 
 const router = Router();
