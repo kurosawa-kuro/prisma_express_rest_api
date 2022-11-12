@@ -8,6 +8,7 @@ async function main() {
         create: {
             email: "taro@example.com",
             name: "taro",
+            password: "taro@example.com",
         },
     });
 
@@ -17,6 +18,7 @@ async function main() {
         create: {
             email: "jiro@example.com",
             name: "jiro",
+            password: "jiro@example.com",
         },
     });
     console.log({ taro, jiro });
