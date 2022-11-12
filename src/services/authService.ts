@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+const jwt = require('jsonwebtoken')
 import { db } from "../utils/db";
 
 export type User = {
@@ -6,11 +7,12 @@ export type User = {
     name: string;
     email: string;
     password: string;
+    token?: string;
 };
 
 const registerUserService = async (
     user: Omit<User, "id">
-): Promise<Omit<User, "id" | "password">> => {
+): Promise<Omit<User, "password">> => {
     console.log({ user })
     const { name, email, password } = user;
     const foundUserWithEmail = await db.user.findUnique({
@@ -23,9 +25,10 @@ const registerUserService = async (
         throw new Error('user already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
 
-    return db.user.create({
+    const registerUser = await db.user.create({
         data: {
             name,
             email,
@@ -38,6 +41,13 @@ const registerUserService = async (
             password: false,
         },
     });
+
+    return {
+        id: registerUser.id,
+        name: registerUser.name,
+        email: registerUser.email,
+        token: generateToken(registerUser.id)
+    } as Omit<User, "password">
 };
 
 const loginUserService = async (
@@ -62,9 +72,16 @@ const loginUserService = async (
     return {
         id: foundUserWithEmail.id,
         name: foundUserWithEmail.name,
-        email: foundUserWithEmail.email
+        email: foundUserWithEmail.email,
+        token: generateToken(foundUserWithEmail.id)
     } as Omit<User, "password">
 };
+
+const generateToken = (id: number) => {
+    return jwt.sign({ id }, "process.env.JWT_SECRET", {
+        expiresIn: '30d',
+    })
+}
 
 
 export { registerUserService, loginUserService };
