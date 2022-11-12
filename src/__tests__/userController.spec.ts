@@ -1,8 +1,8 @@
 import supertest from "supertest";
 import { PrismaClient } from "@prisma/client";
 
-import app from "../../app";
-import resetDatabase from "../../utils/resetDatabase";
+import app from "../app";
+import resetDatabase from "../utils/resetDatabase";
 
 const prisma = new PrismaClient();
 
@@ -27,7 +27,7 @@ describe("userController test", () => {
             });
 
             const response = await supertest(app).get("/users");
-            console.log({ response })
+            // console.log({ response })
 
             expect(response.status).toBe(200);
             expect(response.body.users).toEqual(usersWithoutPassWord);

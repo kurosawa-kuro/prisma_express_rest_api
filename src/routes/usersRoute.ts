@@ -8,13 +8,13 @@ const router = express.Router();
 
 // GET POST
 router.route('/')
-    .get(protect, readUsersAction)
+    .get(readUsersAction)
     .post(createUserAction);
 
 // GET PUT DELETE     
 router.route('/:id')
     .get(readUserAction)
-    .put(protect, updateUserAction)
-    .delete(protect, deleteUserAction);
+    .put(updateUserAction)
+    .delete(deleteUserAction);
 
 export default router;
