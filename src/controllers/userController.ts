@@ -19,6 +19,8 @@ export const createUserAction = asyncHandler(async (req: Request, res: Response)
 // @route   GET /users
 // @access  Public
 export const readUsersAction = asyncHandler(async (req: Request, res: Response) => {
+    throw new Error("EEEEEEEEEE");
+
     const users = await readUsersService();
 
     return res.status(200).json({ users });

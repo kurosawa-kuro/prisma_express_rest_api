@@ -1,5 +1,6 @@
 import express from "express";
 import usersRoute from './routes/usersRoute';
+import { notFound, errorHandler } from './middleware/errorMiddleware';
 
 const app = express();
 app.use(express.json());
@@ -10,5 +11,8 @@ app.get("/", (req, res) => {
 });
 
 app.use('/users', usersRoute);
+
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
