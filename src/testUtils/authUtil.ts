@@ -20,14 +20,11 @@ export const register = async (
 export const login = async (
     user: Omit<User, "name">
 ): Promise<string> => {
-    console.log({ user })
     const res = await supertest(app).post('/auth/login').send({
         email: user.email,
         password: user.password,
     })
 
-    console.log("res.body", res.body)
-    console.log("res.body.user", res.body.user)
     if (!res.body.user?.token) {
         throw new Error("token undefined");
     }
