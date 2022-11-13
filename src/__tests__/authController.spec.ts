@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 import app from "../app";
 import resetDatabase from "../utils/resetDatabase";
+import { setgroups } from "process";
 
 const prisma = new PrismaClient();
 
@@ -16,45 +17,48 @@ describe("authController test", () => {
 
     describe("POST /auth/register", () => {
         test("response with success", async () => {
-            const response = await supertest(app).post("/auth/register").send({
+            // setup
+            const registerUser = {
                 name: 'aaaa',
                 email: 'aaaa@email.com',
-                password: 'aaaa',
-            });
-
+                password: 'aaaa'
+            }
+            const registeredUser = await supertest(app).post("/auth/register").send(registerUser);
             const users = await prisma.user.findMany();
-            const registeUser = await prisma.user.findUnique({ where: { email: 'aaaa@email.com' } });
 
-            expect(response.status).toBe(201);
+            expect(registeredUser.status).toBe(201);
             expect(users.length).toBe(1);
-            expect(response.body.user.name).toEqual(registeUser?.name);
-            expect(response.body.user.email).toEqual(registeUser?.email);
-            expect(response.body.user.token).toBeDefined()
+            expect(registeredUser.body.user.name).toEqual(registerUser.name);
+            expect(registeredUser.body.user.email).toEqual(registerUser.email);
+            expect(registeredUser.body.user.token).toBeDefined()
         });
     });
 
     describe("POST /auth/login", () => {
         test("response with success", async () => {
-            await supertest(app).post("/auth/register").send({
+            // setup
+            const registerUser = {
                 name: 'aaaa',
+                email: 'aaaa@email.com',
+                password: 'aaaa'
+            }
+            await supertest(app).post("/auth/register").send(registerUser);
+
+            const loginUser = {
+                name: 'aaaa',
+                email: 'aaaa@email.com',
+                password: 'aaaa'
+            }
+
+            const loginedUser = await supertest(app).post("/auth/login").send({
                 email: 'aaaa@email.com',
                 password: 'aaaa',
             });
 
-            const response = await supertest(app).post("/auth/login").send({
-                name: 'aaaa',
-                email: 'aaaa@email.com',
-                password: 'aaaa',
-            });
-
-            const users = await prisma.user.findMany();
-            const loginUser = await prisma.user.findUnique({ where: { email: 'aaaa@email.com' } });
-
-            expect(response.status).toBe(201);
-            expect(users.length).toBe(1);
-            expect(response.body.user.name).toEqual(loginUser?.name);
-            expect(response.body.user.email).toEqual(loginUser?.email);
-            expect(response.body.user.token).toBeDefined()
+            expect(loginedUser.status).toBe(201);
+            expect(loginedUser.body.user.name).toEqual(loginUser.name);
+            expect(loginedUser.body.user.email).toEqual(loginUser.email);
+            expect(loginedUser.body.user.token).toBeDefined()
         });
     });
 });
