@@ -21,7 +21,7 @@ describe("authController test", () => {
                 email: 'aaaa@email.com',
                 password: 'aaaa',
             });
-            console.log("response.body.user", response.body.user)
+
             const users = await prisma.user.findMany();
             const registeUser = await prisma.user.findUnique({ where: { email: 'aaaa@email.com' } });
 
@@ -29,8 +29,7 @@ describe("authController test", () => {
             expect(users.length).toBe(1);
             expect(response.body.user.name).toEqual(registeUser?.name);
             expect(response.body.user.email).toEqual(registeUser?.email);
-            expect(response.body.user.token).not.toEqual('');
-            expect(typeof response.body.user.token).toBe('string')
+            expect(response.body.user.token).toBeDefined()
         });
     });
 
@@ -55,8 +54,7 @@ describe("authController test", () => {
             expect(users.length).toBe(1);
             expect(response.body.user.name).toEqual(loginUser?.name);
             expect(response.body.user.email).toEqual(loginUser?.email);
-            expect(response.body.user.token).not.toEqual('');
-            expect(typeof response.body.user.token).toBe('string')
+            expect(response.body.user.token).toBeDefined()
         });
     });
 });
