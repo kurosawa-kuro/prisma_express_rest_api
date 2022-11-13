@@ -29,7 +29,7 @@ describe("userController test", () => {
     describe("GET /users", () => {
         test("response with success", async () => {
             const token = await login(loginUser)
-            console.log({ token })
+            // console.log({ token })
 
             for (let i = 1; i < 5; i++) {
                 await prisma.user.create({ data: { id: i, name: `user${i}`, email: `user${i}@example.com`, password: 'aaaaaaaaaa' } });
