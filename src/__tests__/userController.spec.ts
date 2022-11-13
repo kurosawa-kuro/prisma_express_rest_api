@@ -58,7 +58,7 @@ describe("userController test", () => {
                     id: 1,
                     name: "user1",
                     email: "user1@example.com",
-                    password: ''
+                    password: 'aaaaaaaaaa'
                 }
             });
             const response = await supertest(app).get("/users/1");
@@ -74,7 +74,8 @@ describe("userController test", () => {
             const token = await login(loginUser)
             const body = {
                 name: "user1",
-                email: "user1@example.com"
+                email: "user1@example.com",
+                password: 'aaaaaaaaaa'
             };
 
             const response = await supertest(app)
@@ -100,7 +101,7 @@ describe("userController test", () => {
                     id: 1,
                     name: "user1",
                     email: "user1@example.com",
-                    password: ''
+                    password: 'aaaaaaaaaa'
                 }
             });
             const body = {
@@ -143,7 +144,6 @@ describe("userController test", () => {
                     id: user.id,
                 },
             });
-            console.log({ deletedUser })
 
             expect(response.status).toBe(204);
             expect(deletedUser).toBeNull;
