@@ -2,7 +2,7 @@
 import { db } from "./utils/db";
 import app from "./app";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 db.$connect()
     .then(() => {
