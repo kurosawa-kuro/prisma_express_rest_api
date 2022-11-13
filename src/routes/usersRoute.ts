@@ -8,7 +8,7 @@ const router = express.Router();
 
 // GET POST
 router.route('/')
-    .get(readUsersAction)
+    .get(protect, readUsersAction)
     .post(createUserAction);
 
 // GET PUT DELETE     

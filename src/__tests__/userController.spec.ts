@@ -3,19 +3,33 @@ import { PrismaClient } from "@prisma/client";
 
 import app from "../app";
 import resetDatabase from "../utils/resetDatabase";
-
+import { login, register } from '../testUtils/authUtil'
 const prisma = new PrismaClient();
 
 describe("userController test", () => {
     beforeEach(async () => {
         await resetDatabase();
+        await register(registerUser)
     });
     afterAll(async () => {
         await prisma.$disconnect();
     });
 
+    const registerUser = {
+        name: 'aaaa',
+        email: 'aaaa@email.com',
+        password: 'aaaa'
+    }
+
+    const loginUser = {
+        email: 'aaaa@email.com',
+        password: 'aaaa'
+    }
+
     describe("GET /users", () => {
         test("response with success", async () => {
+            const token = await login(loginUser)
+
             for (let i = 1; i < 5; i++) {
                 await prisma.user.create({ data: { id: i, name: `user${i}`, email: `user${i}@example.com`, password: 'aaaaaaaaaa' } });
             }
@@ -26,7 +40,7 @@ describe("userController test", () => {
                 return user
             });
 
-            const response = await supertest(app).get("/users");
+            const response = await supertest(app).get("/users").set('Authorization', `Bearer ${token}`);
             // console.log({ response })
 
             expect(response.status).toBe(200);
@@ -78,14 +92,14 @@ describe("userController test", () => {
 
     describe("DELETE /users/:id", () => {
         test("response with success", async () => {
-            const user = await prisma.user.create({ data: { id: 1, name: "user1", email: "user1@example.com", password: '' } });
-
-            const response = await supertest(app).delete("/users/1");
+            const user = await prisma.user.create({ data: { name: "user1", email: "user1@example.com", password: '' } });
+            console.log({ user })
+            const response = await supertest(app).delete(`/users/${user.id}`);
             const users = await prisma.user.findMany();
 
             expect(response.status).toBe(204);
 
-            expect(users.length).toBe(0);
+            expect(users.length).toBe(1);
         });
     });
 });
