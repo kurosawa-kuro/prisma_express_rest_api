@@ -3,15 +3,15 @@
     "compilerOptions": {
         "outDir": "./dist",
         "resolveJsonModule": true,
-        "baseUrl": "./src",
+        "baseUrl": "./backend",
         "typeRoots": [
-            "src/@types",
+            "backend/@types",
             "node_modules/@types"
         ],
     },
     "include": [
-        "src/**/*.ts",
-        "src/**/*.js"
+        "backend/**/*.ts",
+        "backend/**/*.js"
     ],
     "exclude": [
         "node_modules"
