@@ -29,6 +29,7 @@ describe("userController test", () => {
     describe("GET /users", () => {
         test("response with success", async () => {
             const token = await login(loginUser)
+            console.log({ token })
 
             for (let i = 1; i < 5; i++) {
                 await prisma.user.create({ data: { id: i, name: `user${i}`, email: `user${i}@example.com`, password: 'aaaaaaaaaa' } });
@@ -69,7 +70,7 @@ describe("userController test", () => {
             expect(response.body.user.name).toEqual(body.name);
             expect(response.body.user.email).toEqual(body.email);
 
-            expect(users.length).toBe(1);
+            expect(users.length).toBe(2);
         });
     });
 
@@ -93,8 +94,9 @@ describe("userController test", () => {
     describe("DELETE /users/:id", () => {
         test("response with success", async () => {
             const user = await prisma.user.create({ data: { name: "user1", email: "user1@example.com", password: '' } });
-            console.log({ user })
+
             const response = await supertest(app).delete(`/users/${user.id}`);
+            // todo: idで指定すれば0に戻せる
             const users = await prisma.user.findMany();
 
             expect(response.status).toBe(204);

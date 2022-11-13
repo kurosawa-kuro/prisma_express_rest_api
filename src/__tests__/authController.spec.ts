@@ -47,6 +47,7 @@ describe("authController test", () => {
                 .send(loginUser);
 
             expect(res.status).toBe(201);
+            expect(res.body.user.name).toEqual(registerUser.name);
             expect(res.body.user.email).toEqual(loginUser.email);
             expect(res.body.user.token).toBeDefined()
         });
