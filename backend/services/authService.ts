@@ -13,7 +13,6 @@ export type User = {
 const registerUserService = async (
     user: Omit<User, "id">
 ): Promise<Omit<User, "password">> => {
-    // console.log({ user })
     const { name, email, password } = user;
     const foundUserWithEmail = await db.user.findUnique({
         where: {
