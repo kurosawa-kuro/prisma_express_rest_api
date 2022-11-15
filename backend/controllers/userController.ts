@@ -17,7 +17,6 @@ const createUserAction = asyncHandler(async (req: Request, res: Response) => {
 // @route   GET /users
 // @access  Public
 const readUsersAction = asyncHandler(async (req: Request, res: Response) => {
-    // console.log("req.user after protect", req.user)
     const users = await readUsersService();
 
     return res.status(200).json({ users });
