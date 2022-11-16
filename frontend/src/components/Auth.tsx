@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./Auth.module.css";
-import FlipCameraAndroidIcon from "@material-ui/icons/FlipCameraAndroid";
+// import FlipCameraAndroidIcon from "@material-ui/icons/FlipCameraAndroid";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchAsyncLogin, fetchAsyncRegister } from "../features/authSlice";
+// import { fetchAsyncLogin, fetchAsyncRegister } from "../features/authSlice";
 
 const Auth = () => {
   const history = useHistory();
@@ -14,29 +14,32 @@ const Auth = () => {
   const [successMsg, setSuccessMsg] = useState("");
 
   const login = async () => {
-    const result = await dispatch(
-      fetchAsyncLogin({ username: username, password: password })
-    );
-    if (fetchAsyncLogin.fulfilled.match(result)) {
-      setSuccessMsg("Successfully logged in!");
-      history.push("/vehicle");
-    } else {
-      setSuccessMsg("Login error!");
-    }
+    console.log("login")
+
+    // const result = await dispatch(
+    //   fetchAsyncLogin({ username: username, password: password })
+    // );
+    // if (fetchAsyncLogin.fulfilled.match(result)) {
+    //   setSuccessMsg("Successfully logged in!");
+    //   history.push("/vehicle");
+    // } else {
+    //   setSuccessMsg("Login error!");
+    // }
   };
-  const authUser = async (e) => {
+  const authUser = async (e: any) => {
     e.preventDefault();
+    console.log("authUser")
     if (isLogin) {
       login();
     } else {
-      const result = await dispatch(
-        fetchAsyncRegister({ username: username, password: password })
-      );
-      if (fetchAsyncRegister.fulfilled.match(result)) {
-        login();
-      } else {
-        setSuccessMsg("Registration error!");
-      }
+      // const result = await dispatch(
+      //   fetchAsyncRegister({ username: username, password: password })
+      // );
+      // if (fetchAsyncRegister.fulfilled.match(result)) {
+      //   login();
+      // } else {
+      //   setSuccessMsg("Registration error!");
+      // }
     }
   };
 
@@ -63,12 +66,13 @@ const Auth = () => {
           />
         </div>
         <button type="submit">{isLogin ? "Login" : "Register"}</button>
-        <div>
-          <FlipCameraAndroidIcon
+        <div style={{ marginTop: 5 }}>
+          <button>Login/Register</button>
+          {/* <FlipCameraAndroidIcon
             data-testid="toggle-icon"
             className={styles.auth__toggle}
             onClick={() => setIsLogin(!isLogin)}
-          />
+          /> */}
         </div>
       </form>
     </div>
