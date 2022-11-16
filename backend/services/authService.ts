@@ -14,6 +14,7 @@ const registerUserService = async (
     user: Omit<User, "id">
 ): Promise<Omit<User, "password">> => {
     const { name, email, password } = user;
+    console.log({ user })
     const foundUserWithEmail = await db.user.findUnique({
         where: {
             email,

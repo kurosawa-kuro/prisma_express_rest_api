@@ -3,11 +3,11 @@ import styles from "./Auth.module.css";
 // import FlipCameraAndroidIcon from "@material-ui/icons/FlipCameraAndroid";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-// import { fetchAsyncLogin, fetchAsyncRegister } from "../features/authSlice";
+import { fetchAsyncLogin } from "../features/auth/authSlice";
 
 const Auth = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
@@ -15,9 +15,16 @@ const Auth = () => {
 
   const login = async () => {
     console.log("login")
+    const email = ""
+    const password = ""
 
-    // const result = await dispatch(
-    //   fetchAsyncLogin({ username: username, password: password })
+    const data = { email, password }
+    // const result = await dispatch(fetchAsyncLogin(data))
+    const result = await dispatch(
+      fetchAsyncLogin(data)
+    );
+    console.log({ result })
+    // const result = await dispatch()
     // );
     // if (fetchAsyncLogin.fulfilled.match(result)) {
     //   setSuccessMsg("Successfully logged in!");
