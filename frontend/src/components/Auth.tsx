@@ -15,18 +15,12 @@ const Auth = () => {
   const [successMsg, setSuccessMsg] = useState("notLogin");
 
   const login = async () => {
-    console.log("★★★★★★★★★★★★★★★★★")
-    console.log("login")
-    console.log("★★★★★★★★★★★★★★★★★")
     const data = { email, password }
     const result = await dispatch(
       fetchAsyncLogin(data)
     );
 
 
-    console.log("★★★★★★★★★★★★★★★★★")
-    console.log({ result })
-    console.log("★★★★★★★★★★★★★★★★★")
     if (fetchAsyncLogin.fulfilled.match(result)) {
       setSuccessMsg("Successfully logged in!");
       history.push("/user");

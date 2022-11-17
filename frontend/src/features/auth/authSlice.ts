@@ -2,10 +2,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import axios from "axios";
 
-export const fetchAsyncLogin = createAsyncThunk("login/post", async (email: { email: string, password: string }) => {
+export const fetchAsyncLogin = createAsyncThunk("login/post", async (user: { email: string, password: string }) => {
   console.log("fetchAsyncLogin")
 
-  const res = await axios.post(`/auth/login`, { email: "2aaaa@email.com", password: "2aaaa@email.com" }, {
+  const res = await axios.post(`/auth/login`, user, {
     headers: {
       "Content-Type": "application/json",
     },

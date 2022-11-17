@@ -76,5 +76,6 @@ describe("Auth Component Test Cases", () => {
         ).toBeInTheDocument();
         expect(mockHistoryPush).toBeCalledWith("/user");
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        screen.debug();
     });
 })
