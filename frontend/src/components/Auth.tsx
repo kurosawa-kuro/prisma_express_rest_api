@@ -12,21 +12,27 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
-  const [successMsg, setSuccessMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("notLogin");
 
   const login = async () => {
+    console.log("★★★★★★★★★★★★★★★★★")
+    console.log("login")
+    console.log("★★★★★★★★★★★★★★★★★")
     const data = { email, password }
     const result = await dispatch(
       fetchAsyncLogin(data)
     );
+
+
+    console.log("★★★★★★★★★★★★★★★★★")
     console.log({ result })
-    // );
-    // if (fetchAsyncLogin.fulfilled.match(result)) {
-    //   setSuccessMsg("Successfully logged in!");
-    //   history.push("/vehicle");
-    // } else {
-    //   setSuccessMsg("Login error!");
-    // }
+    console.log("★★★★★★★★★★★★★★★★★")
+    if (fetchAsyncLogin.fulfilled.match(result)) {
+      setSuccessMsg("Successfully logged in!");
+      history.push("/user");
+    } else {
+      setSuccessMsg("Login error!");
+    }
   };
   const authUser = async (e: any) => {
     e.preventDefault();

@@ -10,6 +10,7 @@ export const fetchAsyncLogin = createAsyncThunk("login/post", async (email: { em
       "Content-Type": "application/json",
     },
   });
+  console.log("res.data", res.data)
   console.log("res.data.user", res.data.user)
   return res.data.user;
 });
