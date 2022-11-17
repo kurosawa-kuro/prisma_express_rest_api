@@ -30,7 +30,7 @@ const Auth = () => {
   };
   const authUser = async (e: any) => {
     e.preventDefault();
-    console.log("authUser")
+
     if (isLogin) {
       login();
     } else {

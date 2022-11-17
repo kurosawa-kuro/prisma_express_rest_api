@@ -3,15 +3,12 @@ import { RootState, AppThunk } from '../../app/store';
 import axios from "axios";
 
 export const fetchAsyncLogin = createAsyncThunk("login/post", async (user: { email: string, password: string }) => {
-  console.log("fetchAsyncLogin")
-
   const res = await axios.post(`/auth/login`, user, {
     headers: {
       "Content-Type": "application/json",
     },
   });
-  console.log("res.data", res.data)
-  console.log("res.data.user", res.data.user)
+
   return res.data.user;
 });
 
@@ -52,8 +49,8 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAsyncLogin.fulfilled, (state, action) => {
-        console.log("fetchAsyncLogin.fulfilled")
-        console.log("action.payload.name", action.payload.name)
+        // console.log("fetchAsyncLogin.fulfilled")
+        // console.log("action.payload.name", action.payload.name)
         localStorage.setItem("token", action.payload.token);
         // state.profile.username = action.payload.name;
 

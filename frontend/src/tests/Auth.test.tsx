@@ -19,11 +19,8 @@ jest.mock("react-router-dom", () => ({
 
 const handlers = [
     rest.post(`/auth/login`, (req, res, ctx) => {
-        console.log(`/auth/login`)
-        console.log("req", JSON.stringify(req, null, 2))
-        console.log("res", JSON.stringify(res, null, 2))
-        return res(ctx.status(200), ctx.json({ user: { name: "abc123", email: "abc123", token: "abc123" } }));
-        return res(ctx.status(200), ctx.json({ user: { name: "abc123", email: "abc123", token: "abc123" }, name: "abc123", token: "abc123" }));
+        const user = { name: "abc123", email: "abc123", token: "abc123" }
+        return res(ctx.status(200), ctx.json({ user }));
     }),
 
 ];
@@ -42,7 +39,7 @@ afterAll(() => {
 });
 
 describe("Auth Component Test Cases", () => {
-    let store: any;
+    let store: ToolkitStore;
     beforeEach(() => {
         store = configureStore({
             reducer: {
@@ -76,6 +73,6 @@ describe("Auth Component Test Cases", () => {
         ).toBeInTheDocument();
         expect(mockHistoryPush).toBeCalledWith("/user");
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        screen.debug();
+        // screen.debug();
     });
 })
