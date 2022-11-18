@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import Auth from "../components/Auth";
+import User from "../components/User";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 
 const mockHistoryPush = jest.fn();
@@ -74,5 +75,10 @@ describe("Auth Component Test Cases", () => {
         expect(mockHistoryPush).toBeCalledWith("/user");
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
         // screen.debug();
+        expect(
+            await screen.findByText("users")
+        ).toBeInTheDocument();
+
+
     });
 })

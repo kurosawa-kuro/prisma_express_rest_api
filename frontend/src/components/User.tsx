@@ -22,7 +22,7 @@ const User = () => {
 
     return (
         <ul>
-            <span  >{successMsg}</span>
+            <span> users </span>
             {users && users.map((user) => (
                 <li key={user.id}><span>name:{user.name}, email:{user.email}</span></li>
             ))}

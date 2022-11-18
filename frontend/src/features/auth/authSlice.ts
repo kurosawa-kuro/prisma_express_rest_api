@@ -2,25 +2,54 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import axios from "axios";
 
-export const fetchAsyncLogin = createAsyncThunk("login/post", async (user: { email: string, password: string }) => {
-  const res = await axios.post(`/auth/login`, user, {
-    headers: {
-      "Content-Type": "application/json",
-    },
+export const fetchAsyncLogin = createAsyncThunk(
+  "login/post",
+  async (user: { email: string, password: string }) => {
+    const res = await axios.post(`/auth/login`, user, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return res.data.user;
   });
 
-  return res.data.user;
-});
 
+export const fetchAsyncGetProfile = createAsyncThunk(
+  "profile/get",
+  async () => {
+    console.log("localStorage.token", localStorage.token)
+    const res = await axios.get(`/auth/profile`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    });
+
+
+    return res.data.user;
+  }
+);
+
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  token?: string;
+};
+
+// profileを型で固める
 export interface AuthState {
-  profile: { id: number, username: string };
+  profile: Omit<User, "password">;
   status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: AuthState = {
   profile: {
     id: 0,
-    username: "",
+    name: "",
+    email: "",
+    token: "",
   },
   status: 'idle',
 };
@@ -58,6 +87,13 @@ export const authSlice = createSlice({
           ...state,
           profile: action.payload,
         }
+      });
+    builder
+      .addCase(fetchAsyncGetProfile.fulfilled, (state, action) => {
+        return {
+          ...state,
+          profile: action.payload,
+        };
       });
     // builder
     //   .addCase(incrementAsync.pending, (state) => {

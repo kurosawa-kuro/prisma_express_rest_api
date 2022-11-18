@@ -20,10 +20,12 @@ const Auth = () => {
       fetchAsyncLogin(data)
     );
 
+    console.log("first")
+    console.log({ result })
 
     if (fetchAsyncLogin.fulfilled.match(result)) {
       setSuccessMsg("Successfully logged in!");
-      history.push("/user");
+      history.push("/main");
     } else {
       setSuccessMsg("Login error!");
     }
@@ -50,7 +52,7 @@ const Auth = () => {
       <span className={styles.auth__status}>{successMsg}</span>
       <form onSubmit={authUser}>
         <div className={styles.auth__input}>
-          <label data-testid="label-email">Username: </label>
+          <label data-testid="label-email">Email: </label>
           <input
             data-testid="input-email"
             type="text"
