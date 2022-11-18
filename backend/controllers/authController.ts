@@ -23,4 +23,16 @@ const loginUserAction = asyncHandler(async (req: Request, res: Response) => {
     return res.status(201).json({ user });
 });
 
-export { registerUserAction, loginUserAction };
+// @desc    Read users
+// @route   GET /users
+// @access  Protect
+const profileUserAction = asyncHandler(async (req: Request, res: Response) => {
+    console.log("profileUserAction")
+    console.log("req.user", req.user)
+
+    // const body = req.body;
+    // const user = await loginUserService(body);
+
+    return res.status(201).json({ user: req.user });
+});
+export { registerUserAction, loginUserAction, profileUserAction };
