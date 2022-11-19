@@ -33,9 +33,10 @@ const MainPage = () => {
     <div className={styles.mainPage__root}>
       <div >
         <div>
-          {profile.name}さん
+          {profile.name}
         </div>
-        <div>
+
+        <div data-testid="span-title">
           <h1>Contents Management system</h1>
         </div>
         <div>

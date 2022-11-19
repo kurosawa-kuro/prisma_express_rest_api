@@ -9,6 +9,8 @@ import authReducer from "../features/auth/authSlice";
 import Auth from "../components/Auth";
 import User from "../components/User";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
+import userReducer from "../features/userSlice";
+import MainPage from "../components/MainPage";
 
 const mockHistoryPush = jest.fn();
 
@@ -19,11 +21,14 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const handlers = [
-    rest.post(`/auth/login`, (req, res, ctx) => {
+    rest.get(`/auth/profile`, (req, res, ctx) => {
         const user = { name: "abc123", email: "abc123", token: "abc123" }
         return res(ctx.status(200), ctx.json({ user }));
+        // return res(ctx.status(200), ctx.json({ id: 1, name: "test user" }));
     }),
-
+    rest.get("/users", (req, res, ctx) => {
+        return res(ctx.status(200), ctx.json({ users: [{ name: "abc1234", email: "abc1234", token: "abc1234" }] }));
+    }),
 ];
 
 const server = setupServer(...handlers);
@@ -39,43 +44,34 @@ afterAll(() => {
     server.close();
 });
 
-describe("Auth Component Test Cases", () => {
+describe("MainPage Component Test Cases", () => {
     let store: ToolkitStore;
     beforeEach(() => {
         store = configureStore({
             reducer: {
                 auth: authReducer,
+                user: userReducer,
             },
         });
     });
     it("1 :Should render all the elements correctly", async () => {
         render(
             <Provider store={store}>
-                <Auth />
+                <MainPage />
             </Provider>
         );
-        // screen.debug();
-        expect(screen.getByTestId("label-email")).toBeTruthy();
-        expect(screen.getByTestId("label-password")).toBeTruthy();
-        expect(screen.getByTestId("input-email")).toBeTruthy();
-        expect(screen.getByTestId("input-password")).toBeTruthy();
-        // expect(screen.getByRole("button")).toBeTruthy();
-        // expect(screen.getByTestId("toggle-icon")).toBeTruthy();
+        screen.debug();
+        expect(screen.getByTestId("span-title")).toBeTruthy();
+        expect(screen.getByTestId("btn-logout")).toBeTruthy();
     });
-    it("3 :Should route to MainPage when login is successful", async () => {
+    it("3 :Should render logged in user name", async () => {
         render(
             <Provider store={store}>
-                <Auth />
+                <MainPage />
             </Provider>
         );
-        userEvent.click(screen.getByText("Login"));
-        expect(
-            await screen.findByText("Successfully logged in!")
-        ).toBeInTheDocument();
-        expect(mockHistoryPush).toBeCalledWith("/main");
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        // screen.debug();
-
+        expect(screen.queryByText("abc123")).toBeNull();
+        expect(await screen.findByText("abc123")).toBeInTheDocument();
 
 
     });
