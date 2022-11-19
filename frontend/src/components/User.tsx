@@ -30,6 +30,7 @@ const User = () => {
 
     return (
         <>
+            <span >{successMsg}</span>
             <h2>Users</h2>
             <ul>
                 {users && users.map((user) => (

@@ -57,12 +57,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  users: [{
-    id: 0,
-    name: "",
-    email: "",
-    token: "",
-  }],
+  users: [],
   status: 'idle',
 };
 
