@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAsyncGetProfile, selectProfile } from "../features/auth/authSlice";
 import { AppDispatch } from "../app/store";
+import User from "./User";
 // import Segment from "./Segment";
 // import Brand from "./Brand";
 // import Vehicle from "./Vehicle";
@@ -32,12 +33,10 @@ const MainPage = () => {
     <div className={styles.mainPage__root}>
       <div >
         <div>
-          {profile.name}
+          {profile.name}さん
         </div>
         <div>
-          <span data-testid="span-title" className={styles.mainPage__title}>
-            Vehicle register system
-          </span>
+          <h1>Contents Management system</h1>
         </div>
         <div>
           <button data-testid="btn-logout" onClick={Logout}>
@@ -47,7 +46,7 @@ const MainPage = () => {
       </div>
       <div >
         <div>
-          {/* <Segment /> */}
+          <User />
         </div>
         <div>
           {/* <Brand /> */}

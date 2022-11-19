@@ -21,12 +21,14 @@ const User = () => {
     }, [])
 
     return (
-        <ul>
-            <span> users </span>
-            {users && users.map((user) => (
-                <li key={user.id}><span>name:{user.name}, email:{user.email}</span></li>
-            ))}
-        </ul>
+        <>
+            <h2>Users</h2>
+            <ul>
+                {users && users.map((user) => (
+                    <li key={user.id}><span>name:{user.name}, email:{user.email}</span></li>
+                ))}
+            </ul>
+        </>
     )
 }
 
