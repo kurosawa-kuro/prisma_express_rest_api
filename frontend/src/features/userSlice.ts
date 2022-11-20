@@ -2,6 +2,46 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../app/store';
 import axios from "axios";
 
+export const fetchAsyncCreateUser = createAsyncThunk(
+  "user/post",
+  async (user: { name: string }) => {
+    const res = await axios.post(`/users/`, user, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    });
+    return res.data;
+  }
+);
+export const fetchAsyncUpdateUser = createAsyncThunk(
+  "user/put",
+  async (user: Omit<User, "email" | "password" | "token">) => {
+    console.log("fetchAsyncUpdateUser")
+    const res = await axios.put(`/users/${user.id}/`, user, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    });
+
+    console.log("fetchAsyncUpdateUser res.data", res.data)
+    return res.data;
+  }
+);
+export const fetchAsyncDeleteUser = createAsyncThunk(
+  "user/delete",
+  async (id: number) => {
+    await axios.delete(`/users/${id}/`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    });
+    return id;
+  }
+);
+
 export const fetchAsyncGetUsers = createAsyncThunk(
   "user/get",
   async () => {
@@ -104,6 +144,17 @@ export const userSlice = createSlice({
           users: action.payload,
         }
       });
+
+    builder.addCase(fetchAsyncUpdateUser.fulfilled, (state, action) => {
+      console.log("fetchAsyncUpdateUser action.payload.id", action.payload.id)
+      console.log("fetchAsyncUpdateUser action.payload.user.id", action.payload.user.id)
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.id === action.payload.user.id ? action.payload.user : user
+        ),
+      };
+    });
 
     // builder
     //   .addCase(incrementAsync.pending, (state) => {

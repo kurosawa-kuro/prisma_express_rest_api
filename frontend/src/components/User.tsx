@@ -3,9 +3,9 @@ import styles from "./User.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
     fetchAsyncGetUsers,
-    // fetchAsyncCreateUser,
-    // fetchAsyncUpdateUser,
-    // fetchAsyncDeleteUser,
+    fetchAsyncCreateUser,
+    fetchAsyncUpdateUser,
+    fetchAsyncDeleteUser,
     editUser,
     selectUsers,
     selectEditedUser,
@@ -45,37 +45,37 @@ const User = () => {
                 />
                 <button
                     data-testid="btn-post"
-                // disabled={!editedUser.name}
-                // onClick={
-                //     editedUser.id === 0
-                //         ? async () => {
-                //             await dispatch(
-                //                 fetchAsyncCreateUser({
-                //                     name: editedUser.name,
-                //                 })
-                //             );
-                //             await dispatch(
-                //                 editUser({
-                //                     id: 0,
-                //                     name: "",
-                //                 })
-                //             );
-                //         }
-                //         : async () => {
-                //             const result = await dispatch(
-                //                 fetchAsyncUpdateUser(editedUser)
-                //             );
-                //             await dispatch(
-                //                 editUser({
-                //                     id: 0,
-                //                     name: "",
-                //                 })
-                //             );
-                //             if (fetchAsyncUpdateUser.fulfilled.match(result)) {
-                //                 setSuccessMsg("Updated in user!");
-                //             }
-                //         }
-                // }
+                    disabled={!editedUser.name}
+                    onClick={
+                        editedUser.id === 0
+                            ? async () => {
+                                await dispatch(
+                                    fetchAsyncCreateUser({
+                                        name: editedUser.name,
+                                    })
+                                );
+                                await dispatch(
+                                    editUser({
+                                        id: 0,
+                                        name: "",
+                                    })
+                                );
+                            }
+                            : async () => {
+                                const result = await dispatch(
+                                    fetchAsyncUpdateUser(editedUser)
+                                );
+                                await dispatch(
+                                    editUser({
+                                        id: 0,
+                                        name: "",
+                                    })
+                                );
+                                if (fetchAsyncUpdateUser.fulfilled.match(result)) {
+                                    setSuccessMsg("Updated in user!");
+                                }
+                            }
+                    }
                 >
                     {editedUser.id === 0 ? "Create" : "Update"}
                 </button>
@@ -86,14 +86,14 @@ const User = () => {
                             <div>
                                 <button
                                     data-testid={`delete-user-${user.id}`}
-                                // onClick={async () => {
-                                //     const result = await dispatch(
-                                //         fetchAsyncDeleteUser(user.id)
-                                //     );
-                                //     if (fetchAsyncDeleteUser.fulfilled.match(result)) {
-                                //         setSuccessMsg("Deleted in user!");
-                                //     }
-                                // }}
+                                    onClick={async () => {
+                                        const result = await dispatch(
+                                            fetchAsyncDeleteUser(user.id)
+                                        );
+                                        if (fetchAsyncDeleteUser.fulfilled.match(result)) {
+                                            setSuccessMsg("Deleted in user!");
+                                        }
+                                    }}
                                 >
                                     delete
                                 </button>
