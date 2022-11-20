@@ -60,7 +60,7 @@ describe("MainPage Component Test Cases", () => {
                 <MainPage />
             </Provider>
         );
-        screen.debug();
+        // screen.debug();
         expect(screen.getByTestId("span-title")).toBeTruthy();
         expect(screen.getByTestId("btn-logout")).toBeTruthy();
     });
