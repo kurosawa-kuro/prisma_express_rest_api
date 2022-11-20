@@ -6,16 +6,16 @@ import {
     // fetchAsyncCreateUser,
     // fetchAsyncUpdateUser,
     // fetchAsyncDeleteUser,
-    // editUser,
+    editUser,
     selectUsers,
-    // selectEditedUser,
+    selectEditedUser,
 } from "../features/userSlice";
 import { AppDispatch } from "../app/store";
 
 const User = () => {
     const dispatch: AppDispatch = useDispatch();
     const users = useSelector(selectUsers);
-    // const editedUser = useSelector(selectEditedUser);
+    const editedUser = useSelector(selectEditedUser);
     const [successMsg, setSuccessMsg] = useState("");
 
     useEffect(() => {
@@ -36,28 +36,28 @@ const User = () => {
                 <input
                     type="text"
                     placeholder="new user name"
-                // value={editedUser.user_name}
-                // onChange={async (e) =>
-                //     await dispatch(
-                //         editUser({ ...editedUser, user_name: e.target.value })
-                //     )
-                // }
+                    value={editedUser.name}
+                    onChange={async (e) =>
+                        await dispatch(
+                            editUser({ ...editedUser, name: e.target.value })
+                        )
+                    }
                 />
                 <button
                     data-testid="btn-post"
-                // disabled={!editedUser.user_name}
+                // disabled={!editedUser.name}
                 // onClick={
                 //     editedUser.id === 0
                 //         ? async () => {
                 //             await dispatch(
                 //                 fetchAsyncCreateUser({
-                //                     user_name: editedUser.user_name,
+                //                     name: editedUser.name,
                 //                 })
                 //             );
                 //             await dispatch(
                 //                 editUser({
                 //                     id: 0,
-                //                     user_name: "",
+                //                     name: "",
                 //                 })
                 //             );
                 //         }
@@ -68,7 +68,7 @@ const User = () => {
                 //             await dispatch(
                 //                 editUser({
                 //                     id: 0,
-                //                     user_name: "",
+                //                     name: "",
                 //                 })
                 //             );
                 //             if (fetchAsyncUpdateUser.fulfilled.match(result)) {
@@ -77,7 +77,7 @@ const User = () => {
                 //         }
                 // }
                 >
-                    {/* {editedUser.id === 0 ? "Create" : "Update"} */}
+                    {editedUser.id === 0 ? "Create" : "Update"}
                 </button>
                 <ul>
                     {users.map((user) => (
@@ -100,7 +100,7 @@ const User = () => {
                                 <button
                                     data-testid={`edit-user-${user.id}`}
                                     onClick={async () => {
-                                        // await dispatch(editUser(user));
+                                        await dispatch(editUser(user));
                                     }}
                                 >
                                     edit
