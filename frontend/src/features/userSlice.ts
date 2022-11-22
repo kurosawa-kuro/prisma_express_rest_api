@@ -54,34 +54,6 @@ export const fetchAsyncGetUsers = createAsyncThunk(
     return res.data.users;
   });
 
-// export const fetchAsyncLogin = createAsyncThunk(
-//   "login/post",
-//   async (user: { email: string, password: string }) => {
-//     const res = await axios.post(`/user/login`, user, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-
-//     return res.data.user;
-//   });
-
-
-// export const fetchAsyncGetProfile = createAsyncThunk(
-//   "profile/get",
-//   async () => {
-//     console.log("localStorage.token", localStorage.token)
-//     const res = await axios.get(`/user/profile`, {
-//       headers: {
-//         Authorization: `Bearer ${localStorage.token}`,
-//       },
-//     });
-
-
-//     return res.data.user;
-//   }
-// );
-
 type User = {
   id: number;
   name: string;
@@ -134,11 +106,6 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAsyncGetUsers.fulfilled, (state, action) => {
-        // console.log("fetchAsyncLogin.fulfilled")
-        console.log("action.payload", action.payload)
-
-        // state.profile.username = action.payload.name;
-
         return {
           ...state,
           users: action.payload,
@@ -146,8 +113,6 @@ export const userSlice = createSlice({
       });
 
     builder.addCase(fetchAsyncUpdateUser.fulfilled, (state, action) => {
-      console.log("fetchAsyncUpdateUser action.payload.id", action.payload.id)
-      console.log("fetchAsyncUpdateUser action.payload.user.id", action.payload.user.id)
       return {
         ...state,
         users: state.users.map((user) =>
